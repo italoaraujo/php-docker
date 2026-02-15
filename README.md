@@ -1,50 +1,99 @@
-# Docker PHP Nginx Environment
+# Docker PHP + Nginx Environment
 
-Este repositório contém uma configuração Docker otimizada para executar aplicações PHP modernas utilizando Nginx e Supervisor sobre o Alpine Linux.
+![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php&logoColor=white)
+![Nginx](https://img.shields.io/badge/Nginx-Alpine-009639?logo=nginx&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg) ![Last
+Commit](https://img.shields.io/github/last-commit/italoaraujo/php-docker)
+![Repo
+Size](https://img.shields.io/github/repo-size/italoaraujo/php-docker)
 
-## 🚀 Tecnologias
+Lightweight and optimized Docker environment for running modern PHP
+applications using Nginx and Supervisor on Alpine Linux.
 
-- **OS**: Alpine Linux (Latest)
-- **Web Server**: Nginx (porta 80)
-- **PHP**: PHP 8.x (com extensões PDO, mbstring, session, etc.)
-- **Process Manager**: Supervisor (gerencia Nginx e PHP-FPM)
+------------------------------------------------------------------------
 
-## 📂 Estrutura do Projeto
+## 🎯 Purpose
 
-- `Dockerfile`: Definição da imagem Docker.
-- `nginx/`: Configurações do servidor Nginx.
-    - `nginx/http.d/default.conf`: Configuração do vhost (Root: `/var/www/public`).
-- `php/`: Configurações do PHP.
-    - `php/php.ini`: Configuração customizada do PHP.
-    - `php/www.conf`: Configuração do pool PHP-FPM.
-- `supervisor/`: Configuração do Supervisor (`supervisord.conf`).
+Provide a solid, minimal, and production-ready foundation for modern PHP
+applications using Alpine Linux as the base system and Nginx as the web
+server.
 
-## ⚙️ Configurações Importantes
+------------------------------------------------------------------------
 
-- **Diretório de Trabalho**: `/var/www`
-- **Document Root**: `/var/www/public`
-- **PHP Socket**: `unix:/run/php/php-fpm.sock`
+## 🚀 Tech Stack
 
-## 🛠️ Como Usar
+-   **Operating System:** Alpine Linux (latest)
+-   **Web Server:** Nginx (port 80)
+-   **PHP:** PHP 8.x (extensions: PDO, mbstring, session, etc.)
+-   **Process Management:** Supervisor (manages Nginx and PHP-FPM)
 
-### Build da Imagem
+------------------------------------------------------------------------
 
-```bash
-docker build -t meu-projeto-php .
+## 📂 Project Structure
+
+    .
+    ├── Dockerfile
+    ├── nginx/
+    │   └── http.d/
+    │       └── default.conf
+    ├── php/
+    │   ├── php.ini
+    │   └── www.conf
+    └── supervisor/
+        └── supervisord.conf
+
+### 📌 Description
+
+-   `Dockerfile` → Docker image definition.
+-   `nginx/http.d/default.conf` → Virtual Host configuration (Document
+    Root: `/var/www/public`).
+-   `php/php.ini` → Custom PHP configuration.
+-   `php/www.conf` → PHP-FPM pool configuration.
+-   `supervisor/supervisord.conf` → Process orchestration configuration.
+
+------------------------------------------------------------------------
+
+## ⚙️ Main Configuration
+
+-   **Working Directory:** `/var/www`
+-   **Document Root:** `/var/www/public`
+-   **PHP-FPM Socket:** `unix:/run/php/php-fpm.sock`
+
+------------------------------------------------------------------------
+
+## 🛠️ Usage
+
+### 🔨 Build the image
+
+``` bash
+docker build -t php-nginx-alpine .
 ```
 
-### Rodando o Container
+### ▶️ Run the container
 
-```bash
-docker run -d -p 8080:80 -v $(pwd):/var/www meu-projeto-php
+``` bash
+docker run -d -p 8080:80 -v $(pwd):/var/www php-nginx-alpine
 ```
 
-Isso mapeia o diretório atual para `/var/www` no container, permitindo desenvolvimento em tempo real.
+The current directory will be mounted to `/var/www` inside the
+container, enabling real-time development.
 
-A aplicação estará acessível em `http://localhost:8080`.
+The application will be available at:
 
-## 📝 Customização
+http://localhost:8080
 
-- Para adicionar novas extensões PHP, edite o `Dockerfile` na seção `apk add`.
-- Para alterar configurações do Nginx, edite `nginx/http.d/default.conf`.
-- Para alterar configurações do PHP, edite `php/php.ini` ou `php/www.conf`.
+------------------------------------------------------------------------
+
+## 📝 Customization
+
+-   To add new PHP extensions → edit the `Dockerfile`.
+-   To change Nginx settings → edit `nginx/http.d/default.conf`.
+-   To change PHP settings → edit `php/php.ini` or `php/www.conf`.
+
+------------------------------------------------------------------------
+
+## 📄 License
+
+This project is licensed under the terms of the MIT License.\
+See the `LICENSE` file for more details.
