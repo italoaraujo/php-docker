@@ -9,14 +9,7 @@ RUN apk update && apk add --no-cache \
     supervisor \
     busybox-suid \
     php84-fpm \
-    php84-cli \
-    php84-pdo \
-    php84-mysqli \
-    php84-pdo_dblib \
-    php84-pdo_pgsql \
-    php84-mbstring \
-    php84-session \
-    php84-sockets
+    php84-cli 
 
 # Criar diretórios necessários
 RUN mkdir -p /run/nginx /var/log/supervisor

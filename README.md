@@ -1,6 +1,6 @@
 # Docker PHP + Nginx Environment
 
-![PHP](https://img.shields.io/badge/PHP-8.x-777BB4?logo=php&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-8.4-777BB4?logo=php&logoColor=white)
 ![Nginx](https://img.shields.io/badge/Nginx-Alpine-009639?logo=nginx&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg) ![Last
@@ -25,15 +25,18 @@ server.
 
 -   **Operating System:** Alpine Linux (latest)
 -   **Web Server:** Nginx (port 80)
--   **PHP:** PHP 8.x (extensions: PDO, mbstring, session, etc.)
--   **Process Management:** Supervisor (manages Nginx and PHP-FPM)
+-   **PHP:** PHP 8.4 (extensions: PDO, mbstring, session, etc.)
+-   **Task Scheduler:** Cron (managed by Supervisor)
+-   **Process Management:** Supervisor (manages Nginx, PHP-FPM, and Cron)
 
 ------------------------------------------------------------------------
 
 ## 📂 Project Structure
 
     .
+    ├── docker-compose.yml
     ├── Dockerfile
+    ├── crontab
     ├── nginx/
     │   └── http.d/
     │       └── default.conf
@@ -45,7 +48,9 @@ server.
 
 ### 📌 Description
 
+-   `docker-compose.yml` → Docker Compose orchestration.
 -   `Dockerfile` → Docker image definition.
+-   `crontab` → Scheduled tasks configuration (Cron).
 -   `nginx/http.d/default.conf` → Virtual Host configuration (Document
     Root: `/var/www/public`).
 -   `php/php.ini` → Custom PHP configuration.
@@ -64,24 +69,30 @@ server.
 
 ## 🛠️ Usage
 
-### 🔨 Build the image
+### 🐳 Using Docker Compose (Recommended)
+
+``` bash
+docker-compose up -d
+```
+
+The application will be available at:
+
+http://localhost:8080
+
+### 🔨 Build the image manually
 
 ``` bash
 docker build -t php-nginx-alpine .
 ```
 
-### ▶️ Run the container
+### ▶️ Run the container manually
 
 ``` bash
-docker run -d -p 8080:80 -v $(pwd):/var/www php-nginx-alpine
+docker run -d -p 8080:80 -v $(pwd)/public:/var/www/public php-nginx-alpine
 ```
 
-The current directory will be mounted to `/var/www` inside the
+The `./public` directory will be mounted to `/var/www/public` inside the
 container, enabling real-time development.
-
-The application will be available at:
-
-http://localhost:8080
 
 ------------------------------------------------------------------------
 
@@ -90,6 +101,7 @@ http://localhost:8080
 -   To add new PHP extensions → edit the `Dockerfile`.
 -   To change Nginx settings → edit `nginx/http.d/default.conf`.
 -   To change PHP settings → edit `php/php.ini` or `php/www.conf`.
+-   To add cron jobs → edit the `crontab` file.
 
 ------------------------------------------------------------------------
 
